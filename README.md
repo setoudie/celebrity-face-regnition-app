@@ -1,3 +1,8 @@
+```text
+Name : Seny Toutou DIEDHIOU
+    --> Data Engieneer
+
+```
 # Application de Reconnaissance Faciale des Célébrités
 
 Ce projet est une application de **reconnaissance faciale des célébrités** développée avec **Django** pour le backend, **React.js** pour le frontend, et **Firebase** pour le déploiement et le stockage. L'objectif du projet est de mieux comprendre le **machine learning** et de créer une application web moderne.

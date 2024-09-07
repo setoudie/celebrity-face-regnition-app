@@ -37,27 +37,27 @@ Le projet est structuré comme suit :
 ```
 celebrity-face-regnition-app/
 │
-├── backend/                   # Code backend Django
-│   ├── celebrity_recognition/  # Dossier du projet Django
+├── backend/                    # Code backend Django
+│   ├── face_recognitions/      # Dossier du projet Django
 │   ├── api/                    # Application Django pour gérer l'API
 │   └── models/                 # Modèles de machine learning (TensorFlow, OpenCV)
 │
-├── frontend/                  # Code frontend React.js
-│   ├── public/                # Fichiers statiques pour React
+├── frontend/                   # Code frontend React.js
+│   ├── public/                 # Fichiers statiques pour React
 │   ├── src/
-│   │   ├── components/        # Composants React (UI)
-│   │   ├── services/          # Services API et utilitaires
-│   │   └── App.js             # Composant principal React
+│   │   ├── components/         # Composants React (UI)
+│   │   ├── services/           # Services API et utilitaires
+│   │   └── App.js              # Composant principal React
 │
-├── firebase/                  # Configuration Firebase pour le déploiement et le stockage
-│   ├── firebase.json          # Configuration de l'hébergement Firebase
-│   └── .firebaserc            # Paramètres du projet Firebase
+├── firebase/                   # Configuration Firebase pour le déploiement et le stockage
+│   ├── firebase.json           # Configuration de l'hébergement Firebase
+│   └── .firebaserc             # Paramètres du projet Firebase
 │
-├── ml_models/                 # Modèles de machine learning pré-entraînés ou personnalisés
-│   ├── model.py               # Logique de chargement et d'inférence du modèle ML
-│   └── trained_models/        # Modèles sauvegardés TensorFlow ou OpenCV
+├── ml_models/                  # Modèles de machine learning pré-entraînés ou personnalisés
+│   ├── model.py                # Logique de chargement et d'inférence du modèle ML
+│   └── trained_models/         # Modèles sauvegardés TensorFlow ou OpenCV
 │
-└── README.md                  # Fichier README du projet
+└── README.md                   # Fichier README du projet
 ```
 
 ### Backend (Django)

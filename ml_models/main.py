@@ -1,7 +1,11 @@
 import cv2
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import face_recognition
+# import face_recognition
+from deepface import DeepFace
+
+result = DeepFace.verify("gning.jpg","gning1.jpg")
+print(result)
 
 img_path = 'images/train/arnold_schwarzenegger/400px-Arnold_Schwarzenegger_(9048849809).jpg'
 
@@ -29,9 +33,26 @@ def show_image_with_cv2(path):
     cv2.imshow("Image", img)
     cv2.waitKey(0)
 
-# plot_image(img_path)
+plot_image(img_path)
 # show_image_with_cv2(img_path)
 
-img = cv2.imread(img_path)
-rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-encoded_img = face_recognition.face_encodings(rgb_img)[0]
+backends = [
+  'opencv',
+  'ssd',
+  'dlib',
+  'mtcnn',
+  'fastmtcnn',
+  'retinaface',
+  'mediapipe',
+  'yolov8',
+  'yunet',
+  'centerface',
+]
+
+alignment_modes = [True, False]
+
+face_objs = DeepFace.extract_faces(
+  img_path = "my_team.png",
+  detector_backend = backends[4],
+  align = alignment_modes[0],
+)

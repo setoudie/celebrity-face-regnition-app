@@ -2,6 +2,7 @@ from deepface import DeepFace
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+from PIL import Image
 
 backends = [
   'opencv',
@@ -18,20 +19,22 @@ backends = [
 
 alignement_modes =[True, False]
 
-faces = DeepFace.extract_faces('seny_ucad.jpg', detector_backend=backends[1], enforce_detection=False)
-# print(len(faces))
+def extract_faces(img_path):
+  faces = DeepFace.extract_faces(img_path, detector_backend=backends[0], enforce_detection=False)
 
-img_array = faces[0]['face']
+  all_faces = []
+  for i in range(len(faces)):
+    img_array = faces[i]['face']
+    resize_img_array = cv2.resize(img_array,(224,224))
+    all_faces.append(resize_img_array)
+    img_array = []
+    resize_img_array = []
+  return all_faces
 
-# initiale face shape (73, 73, 3)
-print(img_array.shape)
 
-# Transform shape to a good shape --> (224, 224, 3)
-resize_img_array = cv2.resize(img_array, (224, 224))
+detected_faces = extract_faces('my_team_gray.png')
+print(len(detected_faces))
 
-print(resize_img_array.shape)
-
-# img_face = np.squeeze(faces[0]['face'].shape)
-# print(img_face.shape)
-plt.imshow(resize_img_array)
-plt.show()
+for face in detected_faces:
+  plt.imshow(face)
+  plt.show()

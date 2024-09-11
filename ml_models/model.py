@@ -5,18 +5,7 @@ import cv2
 from PIL import Image
 import os
 
-backends = [
-  'opencv',
-  'ssd',
-  'dlib',
-  'mtcnn',
-  'fastmtcnn',
-  'retinaface',
-  'mediapipe',
-  'yolov8',
-  'yunet',
-  'centerface',
-]
+backends = ['opencv', 'ssd', 'dlib', 'mtcnn', 'fastmtcnn', 'retinaface', 'mediapipe', 'yolov8', 'yunet', 'centerface',]
 
 alignement_modes =[True, False]
 
@@ -75,7 +64,7 @@ def show_and_save_detected_faces(faces):
         Liste de tableaux numpy représentant des visages détectés.
     """
     # Création du dossier "detected_face" s'il n'existe pas
-    save_dir = 'detected_faces'
+    save_dir = 'detected_faces/'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
@@ -85,14 +74,34 @@ def show_and_save_detected_faces(faces):
 
         # Sauvegarde du visage dans un fichier avant de l'afficher
         plt.savefig(f'{save_dir}/face_{i+1}.jpg')
-        # plt.close()  # Ferme la figure pour libérer la mémoire
+        plt.close()  # Ferme la figure pour libérer la mémoire
         # Affiche l'image après l'avoir sauvegardée
-        plt.imshow(face)
+        # plt.imshow(face)
         plt.show()
 
 
-detected_faces = extract_faces('helicia.jpg')
+detected_faces = extract_faces('my_team.png')
 show_and_save_detected_faces(detected_faces)
 
 print(len(detected_faces))
 
+def predict_celebrity():
+    save_dir = 'detected_faces/'
+    images_dir = 'images/'
+    if os.path.exists(save_dir) and os.path.exists(images_dir):
+        # pass
+        all_detected_faces = os.listdir(save_dir)
+        celebrity_dir = os.listdir(images_dir)
+        for face in all_detected_faces:
+            for i, celebrity_name in enumerate(celebrity_dir):
+                celebrity_name_images = os.listdir(images_dir+"/"+celebrity_dir[i])
+                print("\n\n",celebrity_name)
+                for j in range(len(celebrity_name_images)):
+                    print(face, " <--vs--> ", celebrity_name_images[j])
+            # break
+                # print(face, os.listdir(images_dir+"/"+celebrity_dir[i]))
+
+    else:
+        print("FileNotFoundError")
+
+predict_celebrity()

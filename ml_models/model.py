@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 from PIL import Image
 import os
+import tempfile
 
 backends = ['opencv', 'ssd', 'dlib', 'mtcnn', 'fastmtcnn', 'retinaface', 'mediapipe', 'yolov8', 'yunet', 'centerface',]
 
@@ -55,7 +56,7 @@ def extract_faces(img_path):
 
   return all_faces
 
-
+# Fonction pour afficher et sauvegarder les faces detectes
 def show_and_save_detected_faces(faces):
     """
         Affiche chaque visage détecté et l'enregistre dans un fichier.
@@ -66,7 +67,7 @@ def show_and_save_detected_faces(faces):
     # Création du dossier "detected_face" s'il n'existe pas
     save_dir = 'detected_faces/'
     if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
+        os.makedirs(save_dir) # creation du dossier `detected_faces/`
 
     for i, face in enumerate(faces):
         plt.imshow(face)
@@ -74,34 +75,62 @@ def show_and_save_detected_faces(faces):
 
         # Sauvegarde du visage dans un fichier avant de l'afficher
         plt.savefig(f'{save_dir}/face_{i+1}.jpg')
-        plt.close()  # Ferme la figure pour libérer la mémoire
-        # Affiche l'image après l'avoir sauvegardée
-        # plt.imshow(face)
-        plt.show()
+        # plt.close()  # Ferme la figure pour libérer la mémoire
+        # plt.show()
 
 
-detected_faces = extract_faces('my_team.png')
-show_and_save_detected_faces(detected_faces)
-
-print(len(detected_faces))
-
+# Fonction pour predir une celebrite
 def predict_celebrity():
-    save_dir = 'detected_faces/'
-    images_dir = 'images/'
+    save_dir = 'detected_faces'
+    images_dir = 'images'
     if os.path.exists(save_dir) and os.path.exists(images_dir):
         # pass
         all_detected_faces = os.listdir(save_dir)
         celebrity_dir = os.listdir(images_dir)
-        for face in all_detected_faces:
-            for i, celebrity_name in enumerate(celebrity_dir):
-                celebrity_name_images = os.listdir(images_dir+"/"+celebrity_dir[i])
-                print("\n\n",celebrity_name)
-                for j in range(len(celebrity_name_images)):
-                    print(face, " <--vs--> ", celebrity_name_images[j])
-            # break
-                # print(face, os.listdir(images_dir+"/"+celebrity_dir[i]))
+
+        # dictionnaire contenant les resultats : `result['celeb_name']['face'] = list of boolean`
+        result = dict()
+
+        for celeb_i, celebrity_name in enumerate(celebrity_dir):
+            print(celeb_i, celebrity_name)
+            result[celebrity_name] = dict()
+            celebrity_name_images = os.listdir(images_dir + "/" + celebrity_name)
+            print(celebrity_name_images)
+
+            for face in all_detected_faces:
+                result[celebrity_name][face.split('.')[0]] = list()
+
+                for i in range(len(celebrity_name_images)):
+                    if i == 0:
+                        print("Total img :",len(celebrity_name_images))
+                    face_path = save_dir + "/" + face
+                    celeb_img_path = images_dir + "/" + celebrity_name + "/" + celebrity_name_images[i]
+
+                    img = cv2.imread(celeb_img_path)
+                    resized_celeb_img = cv2.resize(img, (224,224))
+
+                    # Enregistrer l'image redimensionnée dans un fichier temporaire
+                    with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
+                        temp_file_name = temp_file.name
+                        cv2.imwrite(temp_file_name, resized_celeb_img)
+
+                    # print(face_path, celeb_img_path)
+                    face_match = DeepFace.verify(
+                        img1_path=face_path,
+                        img2_path=temp_file_name,
+                        detector_backend=backends[0],
+                        align=alignement_modes[0],
+                        enforce_detection=False,
+                    )
+                    # print(face, celebrity_name_images[i], face_match['verified'])
+                    result[celebrity_name][face.split('.')[0]].append(face_match['verified'])
+                # break
+
+        print(result)
 
     else:
         print("FileNotFoundError")
 
+detected_faces = extract_faces('will.jpg')
+show_and_save_detected_faces(detected_faces)
 predict_celebrity()

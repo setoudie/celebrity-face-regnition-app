@@ -1,15 +1,21 @@
-from deepface import DeepFace
-from PIL import Image
 
-path='gning1.jpg'
-img = Image.open(path)
-img = img.convert("L")
-img.save('gray_heli.jpg')
-img.show()
 
-objs = DeepFace.analyze(
-  img_path = "gray_heli.jpg",
-  actions = ['age'],
-)
+results = {
+           'kate_beckinsale': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'lauren_cohan': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'dwayne_johnson': {'face_1': [False, True, True, False, False, True, False, False, False, False, True, True, False, False, True, True, False, True, False, False]},
+           'madonna': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'sofia_vergara': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'ben_afflek': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'anne_hathaway': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'arnold_schwarzenegger': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'mindy_kaling': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'elton_john': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'jerry_seinfeld': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'will_smith': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'keanu_reeves': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+           'simon_pegg': {'face_1': [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]}
+           }
 
-print(objs)
+taux = (results['dwayne_johnson']['face_1'].count(True)/len(results['dwayne_johnson']['face_1']))*100
+print(taux)

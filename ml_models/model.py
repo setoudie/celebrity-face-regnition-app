@@ -131,6 +131,6 @@ def predict_celebrity():
     else:
         print("FileNotFoundError")
 
-detected_faces = extract_faces('will.jpg')
+detected_faces = extract_faces('odc.jpg')
 show_and_save_detected_faces(detected_faces)
 predict_celebrity()

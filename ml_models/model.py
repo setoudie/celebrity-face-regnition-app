@@ -5,6 +5,7 @@ import cv2
 from PIL import Image
 import os
 import tempfile
+from tqdm import tqdm
 
 backends = ['opencv', 'ssd', 'dlib', 'mtcnn', 'fastmtcnn', 'retinaface', 'mediapipe', 'yolov8', 'yunet', 'centerface',]
 
@@ -46,7 +47,7 @@ def extract_faces(img_path):
   faces = DeepFace.extract_faces(img_path, detector_backend=backends[0], enforce_detection=False)
 
   all_faces = []
-  for i in range(len(faces)):
+  for i in tqdm(range(len(faces)), desc="Extraction des faces"):
     img_array = faces[i]['face']
     # print(faces[0])  # Affiche les informations du premier visage pour le débogage
     resize_img_array = cv2.resize(img_array, (224, 224))  # Redimensionne à (224, 224)
@@ -69,7 +70,7 @@ def show_and_save_detected_faces(faces):
     if not os.path.exists(save_dir):
         os.makedirs(save_dir) # creation du dossier `detected_faces/`
 
-    for i, face in enumerate(faces):
+    for i, face in tqdm(enumerate(faces), desc='Show and Save faces'):
         plt.imshow(face)
         plt.axis('off')
 
@@ -92,17 +93,16 @@ def predict_celebrity():
         result = dict()
 
         for celeb_i, celebrity_name in enumerate(celebrity_dir):
-            print(celeb_i, celebrity_name)
+            # print(celeb_i, celebrity_name)
             result[celebrity_name] = dict()
             celebrity_name_images = os.listdir(images_dir + "/" + celebrity_name)
-            print(celebrity_name_images)
+            # print(celebrity_name_images)
 
+            print(f"\nCelebrity Name : {celebrity_name}", end='\n\n')
             for face in all_detected_faces:
                 result[celebrity_name][face.split('.')[0]] = list()
 
-                for i in range(len(celebrity_name_images)):
-                    if i == 0:
-                        print("Total img :",len(celebrity_name_images))
+                for i in tqdm(range(len(celebrity_name_images)),desc=f'Verify {celebrity_name} images : {face}'):
                     face_path = save_dir + "/" + face
                     celeb_img_path = images_dir + "/" + celebrity_name + "/" + celebrity_name_images[i]
 
@@ -124,13 +124,12 @@ def predict_celebrity():
                     )
                     # print(face, celebrity_name_images[i], face_match['verified'])
                     result[celebrity_name][face.split('.')[0]].append(face_match['verified'])
+            print()
                 # break
 
-        print(result)
+        # print(result)
+        return result
 
-    else:
-        print("FileNotFoundError")
-
-detected_faces = extract_faces('odc.jpg')
-show_and_save_detected_faces(detected_faces)
-predict_celebrity()
+# detected_faces = extract_faces('odc.jpg')
+# show_and_save_detected_faces(detected_faces)
+# predict_celebrity()

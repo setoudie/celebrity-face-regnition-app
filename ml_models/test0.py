@@ -1,4 +1,5 @@
 import pandas as pd
+from model import *
 
 results = {
   'kate_beckinsale': {
@@ -299,5 +300,15 @@ def calculate_mean_score(raw_data):
   return pd.Series(mean_score_dict)
 
 
-df = calculate_mean_score(results)
-print(df['will_smith'])
+detected_faces = extract_faces('odc.jpg')
+show_and_save_detected_faces(detected_faces)
+# results_ = predict_celebrity()
+
+celeb_dico = get_all_celebs_faces_scores(results)
+print(celeb_dico)
+print('\n')
+
+df = pd.DataFrame.from_dict(celeb_dico, orient='index')
+print(df)
+
+print(df['face_1'].max)

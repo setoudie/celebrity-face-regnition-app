@@ -269,6 +269,8 @@ def find_celebrity(my_results_dico):
 
 
 df = score_df(results)
-print(df)
+# print(df)
+# print(df['face_1'].max)
 
-print(df['face_1'].max)
+# find_face_owner(df)
+print(find_face_owner(df))

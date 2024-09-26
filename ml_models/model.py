@@ -175,3 +175,21 @@ def score_df(raw_data):
     df_faces_scores.to_csv(f'{save_dir}/faces_scores.csv')
 
     return df_faces_scores
+
+def find_face_owner(scores_df):
+
+    max_scores_faces = dict()
+
+    for col in scores_df.columns:
+        max_scores_faces[col] = dict()
+        max_value = scores_df[col].max()
+        max_index = scores_df[col].idxmax()  # Obtient l'index de la valeur max
+
+        if max_value >= 40.5:
+            max_scores_faces[col]['face_name'] = max_index
+        else:
+            max_scores_faces[col]['face_name'] = 'Unknow'
+
+        max_scores_faces[col]['face_score'] = max_value
+
+    return max_scores_faces

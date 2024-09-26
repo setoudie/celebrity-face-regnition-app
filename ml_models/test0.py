@@ -1,4 +1,3 @@
-import pandas as pd
 from model import *
 
 results = {
@@ -264,51 +263,12 @@ def find_celebrity(my_results_dico):
   pass
 
 
-# ----------------------------
-def calculate_score(my_face_bool_list):
-  # pass
-  true_val = my_face_bool_list.count(True)
-  # false_val = my_face_bool_list.count(False)
-  total_val = len(my_face_bool_list)
-  score = 100*true_val/total_val
-  return round(score, 2)
-
-#-------------------------------
-def get_celeb_faces_score(my_celeb_result_dict):
-  celeb_faces_scores = dict()
-  for face in my_celeb_result_dict:
-    celeb_faces_scores[face] = calculate_score(my_celeb_result_dict[face])
-  # print(celeb_faces_scores)
-  return celeb_faces_scores
-
-def get_all_celebs_faces_scores(rslt):
-  all_celebs_scores = dict()
-  for celeb in rslt:
-    all_celebs_scores[celeb] = get_celeb_faces_score(rslt[celeb])
-  # print(all_celebs_scores)
-
-  return all_celebs_scores
-
-def calculate_mean_score(raw_data):
-  faces_scores = get_all_celebs_faces_scores(raw_data)
-  mean_score_dict = dict()
-  
-  for celeb in raw_data:
-    celeb_mean_score = round(sum([*faces_scores[celeb].values()]) / len(faces_scores[celeb]), 2)
-    mean_score_dict[celeb] = celeb_mean_score
-
-  return pd.Series(mean_score_dict)
-
-
-detected_faces = extract_faces('odc.jpg')
-show_and_save_detected_faces(detected_faces)
+# detected_faces = extract_faces('helicia.jpg')
+# show_and_save_detected_faces(detected_faces)
 # results_ = predict_celebrity()
 
-celeb_dico = get_all_celebs_faces_scores(results)
-print(celeb_dico)
-print('\n')
 
-df = pd.DataFrame.from_dict(celeb_dico, orient='index')
+df = score_df(results)
 print(df)
 
 print(df['face_1'].max)

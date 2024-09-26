@@ -4,8 +4,11 @@ import numpy as np
 import cv2
 from PIL import Image
 import os
+import shutil
 import tempfile
 from tqdm import tqdm
+import pandas as pd
+
 
 backends = ['opencv', 'ssd', 'dlib', 'mtcnn', 'fastmtcnn', 'retinaface', 'mediapipe', 'yolov8', 'yunet', 'centerface',]
 
@@ -44,7 +47,7 @@ def extract_faces(img_path):
   - `detector_backend` : Le backend de détection des visages utilisé par DeepFace est défini dans la variable `backends[0]`.
   """
 
-  faces = DeepFace.extract_faces(img_path, detector_backend=backends[0], enforce_detection=False)
+  faces = DeepFace.extract_faces(img_path, detector_backend=backends[4], enforce_detection=False)
 
   all_faces = []
   for i in tqdm(range(len(faces)), desc="Extraction des faces"):
@@ -67,8 +70,9 @@ def show_and_save_detected_faces(faces):
     """
     # Création du dossier "detected_face" s'il n'existe pas
     save_dir = 'detected_faces/'
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir) # creation du dossier `detected_faces/`
+    if os.path.exists(save_dir):
+        shutil.rmtree(save_dir) # Supression du dossier `detected_faces/` existant
+    os.makedirs(save_dir) # Creation du dossier `detected_faces/`
 
     for i, face in tqdm(enumerate(faces), desc='Show and Save faces'):
         plt.imshow(face)
@@ -130,6 +134,44 @@ def predict_celebrity():
         # print(result)
         return result
 
-# detected_faces = extract_faces('odc.jpg')
-# show_and_save_detected_faces(detected_faces)
-# predict_celebrity()
+
+# ----------------------------
+def calculate_score(my_face_bool_list):
+    # pass
+    true_val = my_face_bool_list.count(True)
+    # false_val = my_face_bool_list.count(False)
+    total_val = len(my_face_bool_list)
+    score = 100 * true_val / total_val
+    return round(score, 2)
+
+
+# -------------------------------
+def get_celeb_faces_score(my_celeb_result_dict):
+    celeb_faces_scores = dict()
+    for face in my_celeb_result_dict:
+        celeb_faces_scores[face] = calculate_score(my_celeb_result_dict[face])
+    # print(celeb_faces_scores)
+    return celeb_faces_scores
+
+
+def get_all_celebs_faces_scores(rslt):
+    all_celebs_scores = dict()
+    for celeb in rslt:
+        all_celebs_scores[celeb] = get_celeb_faces_score(rslt[celeb])
+    # print(all_celebs_scores)
+
+    return all_celebs_scores
+
+
+def score_df(raw_data):
+    faces_scores = get_all_celebs_faces_scores(raw_data)
+    df_faces_scores = pd.DataFrame.from_dict(faces_scores, orient='index')
+
+    save_dir = 'data/'
+    if os.path.exists(save_dir):
+        shutil.rmtree(save_dir)
+
+    os.makedirs(save_dir)
+    df_faces_scores.to_csv(f'{save_dir}/faces_scores.csv')
+
+    return df_faces_scores

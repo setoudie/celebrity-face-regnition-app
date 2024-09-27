@@ -263,14 +263,14 @@ def find_celebrity(my_results_dico):
   pass
 
 
-# detected_faces = extract_faces('helicia.jpg')
-# show_and_save_detected_faces(detected_faces)
+detected_faces = extract_faces('odc.jpg')
+show_and_save_detected_faces(detected_faces)
 # results_ = predict_celebrity()
 
 
-df = score_df(results)
+# df = score_df(results_)
 # print(df)
 # print(df['face_1'].max)
 
 # find_face_owner(df)
-print(find_face_owner(df))
+# print(find_face_owner(df))

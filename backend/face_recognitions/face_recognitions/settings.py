@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]  # Make sure the port number matches the one you're using for the React app.
+# CORS_ORIGIN_WHITELIST = [
+#      'http://localhost:3000'
+# ]
 
 
 # Application definition
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'faces_app',
     'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

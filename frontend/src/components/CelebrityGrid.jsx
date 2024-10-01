@@ -24,7 +24,7 @@ const CelebrityGrid = () => {
         const data = await response.json();
         setCelebrity(data);   // Mise à jour de l'état avec les données reçues
         setLoading(false);    // Fin du chargement
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
         setLoading(false);
@@ -47,13 +47,15 @@ const CelebrityGrid = () => {
     <Card maxW='sm'>
       <CardBody>
         <Image
-          src={'https://via.placeholder.com/150'} // Image par défaut si imageUrl est null
-          alt={celebrity.last_name}
+          borderRadius='full'
+          boxSize='150px'
+          src={celebrity[0].link} // Image par défaut si imageUrl est null
+          alt={celebrity[0].last_name}
           borderRadius='lg'
         />
         <Stack mt='6' spacing='3'>
-          <Heading size='md'>{celebrity.first_name} {celebrity.last_name}</Heading>
-          <Text>{celebrity.profession}</Text>
+          <Heading size='md'>{celebrity[0].first_name} {celebrity[0].last_name}</Heading>
+          <Text>{celebrity[0].profession}</Text>
         </Stack>
       </CardBody>
       <Divider />

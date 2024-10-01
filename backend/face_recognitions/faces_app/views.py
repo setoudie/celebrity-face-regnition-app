@@ -41,7 +41,7 @@ def all_celebrities(request):
             "first_name": "Jerry",
             "last_name": "Seinfeld",
             "profession": "Comedian",
-            "link": "https://www.google.com/imgres?q=Jerry%0D%0ASeinfeld&imgurl=https%3A%2F%2Fvariety.com%2Fwp-content%2Fuploads%2F2024%2F06%2FScreen-Shot-2024-06-17-at-11.03.22-AM.png%3Fw%3D1000%26h%3D667%26crop%3D1&imgrefurl=https%3A%2F%2Fvariety.com%2F2024%2Ftv%2Fnews%2Fjerry-seinfeld-pro-palestine-heckler-comedy-show-1236039887%2F&docid=S_lK_JTqVvjCFM&tbnid=Fso34kXad9MSIM&vet=12ahUKEwiO_Zy44e2IAxVZ9rsIHQuMD88QM3oECGoQAA..i&w=1000&h=667&hcb=2&ved=2ahUKEwiO_Zy44e2IAxVZ9rsIHQuMD88QM3oECGoQAA",
+            "link": "https://variety.com/wp-content/uploads/2024/06/Screen-Shot-2024-06-17-at-11.03.22-AM.png?w=1000&h=667&crop=1&resize=1000%2C667",
         },
         {
             "first_name": "Kate",

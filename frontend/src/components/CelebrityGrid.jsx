@@ -48,27 +48,16 @@ const CelebrityGrid = () => {
       <CardBody>
         <Image
           borderRadius='full'
-          boxSize='150px'
-          src={celebrity[0].link} // Image par défaut si imageUrl est null
-          alt={celebrity[0].last_name}
+          boxSize='250px'
+          src={celebrity[7].link} // Image par défaut si imageUrl est null
+          alt={celebrity[7].last_name}
           borderRadius='lg'
         />
         <Stack mt='6' spacing='3'>
-          <Heading size='md'>{celebrity[0].first_name} {celebrity[0].last_name}</Heading>
-          <Text>{celebrity[0].profession}</Text>
+          <Heading size='md'>{celebrity[6].first_name} {celebrity[6].last_name}</Heading>
+          <Text>{celebrity[6].profession}</Text>
         </Stack>
       </CardBody>
-      <Divider />
-      <CardFooter>
-        <ButtonGroup spacing='2'>
-          <Button variant='solid' colorScheme='blue'>
-            Follow
-          </Button>
-          <Button variant='ghost' colorScheme='blue'>
-            Share
-          </Button>
-        </ButtonGroup>
-      </CardFooter>
     </Card>
   );
 };

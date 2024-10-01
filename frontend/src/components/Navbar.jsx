@@ -18,7 +18,7 @@ const Navbar = () => {
       zIndex={1000}
       px={8}
       py={4}
-      bg={useColorModeValue("blue.200", "blue.700")}
+      bg={bg}
       borderRadius="lg"
       boxShadow="lg"
       // w="100%"

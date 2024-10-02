@@ -23,7 +23,7 @@ def all_celebrities(request):
             "first_name": "Ben",
             "last_name": "Afflek",
             "profession": "Actor",
-            "link": "https://www.google.com/imgres?q=ben%20affleck&imgurl=https%3A%2F%2Fmedia.npr.org%2Fassets%2Fimg%2F2015%2F06%2F25%2Faffleck-fe6519ed5b2e63b006527827de2c3948a7d325f4.jpg&imgrefurl=https%3A%2F%2Fwww.npr.org%2Fsections%2Fthetwo-way%2F2015%2F06%2F25%2F417455657%2Fafter-ben-affleck-scandal-pbs-postpones-finding-your-roots&docid=aQ2e-Fgy-BZW0M&tbnid=WESFVc2DzNXdRM&vet=12ahUKEwjS1sbI4O2IAxWMRaQEHekGCSwQM3oECCcQAA..i&w=1904&h=1428&hcb=2&itg=1&ved=2ahUKEwjS1sbI4O2IAxWMRaQEHekGCSwQM3oECCcQAA",
+            "link": "https://media.npr.org/assets/img/2015/06/25/affleck-fe6519ed5b2e63b006527827de2c3948a7d325f4.jpg?s=1100&c=85&f=webp"
         },
         {
             "first_name": "Dwayne",

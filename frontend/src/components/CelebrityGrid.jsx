@@ -1,64 +1,54 @@
 import {
-  Card,
-  CardBody,
-  CardFooter,
-  Image,
-  Stack,
-  Heading,
+  Flex,
   Text,
-  Button,
-  ButtonGroup,
-  Divider
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
+import CelebrityCard from './CelebrityCard';  // Assurez-vous que le composant CelebrityCard est bien défini
 
 const CelebrityGrid = () => {
-  const [celebrity, setCelebrity] = useState([]); // État pour stocker les données de la célébrité
-  const [loading, setLoading] = useState(true);     // État pour le chargement des données
+  const [celebrities, setCelebrities] = useState([]); // État pour stocker les données de célébrités
+  const [loading, setLoading] = useState(true);       // État pour le chargement des données
 
   // Fonction pour récupérer les données depuis l'API
   useEffect(() => {
-    const fetchCelebrity = async () => {
+    const fetchCelebrities = async () => {
       try {
         const response = await fetch('http://127.0.0.1:8000/face/celebrities/'); // Remplace l'URL par ton endpoint API
         const data = await response.json();
-        setCelebrity(data);   // Mise à jour de l'état avec les données reçues
-        setLoading(false);    // Fin du chargement
-        // console.log(data);
+        setCelebrities(data);   // Mise à jour de l'état avec les données reçues
+        setLoading(false);      // Fin du chargement
       } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
         setLoading(false);
       }
     };
 
-    fetchCelebrity();
+    fetchCelebrities();
   }, []);  // Le tableau vide [] signifie que l'effet s'exécute une seule fois après le premier rendu
 
-  // Affichage d'un message de chargement ou du contenu de la carte
+  // Affichage d'un message de chargement
   if (loading) {
     return <Text>Loading...</Text>;
   }
 
-  if (!celebrity) {
+  // Affichage d'un message d'erreur si aucune donnée n'est reçue
+  if (!celebrities.length) {
     return <Text>Failed to load celebrity data</Text>;
   }
 
+  // Rendu de la grille des célébrités
   return (
-    <Card maxW='sm'>
-      <CardBody>
-        <Image
-          borderRadius='full'
-          boxSize='250px'
-          src={celebrity[7].link} // Image par défaut si imageUrl est null
-          alt={celebrity[7].last_name}
-          borderRadius='lg'
+    <Flex wrap="wrap" justifyContent="center" gap={6}>
+      {celebrities.map((celebrity) => (
+        <CelebrityCard
+          // key={celebrity.id}  // Ajout de la clé unique pour chaque carte
+          name={celebrity.first_name}
+          surname={celebrity.last_name}
+          imageUrl={celebrity.link}
+          profession={celebrity.profession}
         />
-        <Stack mt='6' spacing='3'>
-          <Heading size='md'>{celebrity[6].first_name} {celebrity[6].last_name}</Heading>
-          <Text>{celebrity[6].profession}</Text>
-        </Stack>
-      </CardBody>
-    </Card>
+      ))}
+    </Flex>
   );
 };
 

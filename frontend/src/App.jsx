@@ -14,7 +14,10 @@ function App() {
       <Box>
         <Navbar/>
       </Box>
-        <CelebrityGrid/>
+      <Box marginTop="10vh">
+        <CelebrityGrid />
+      </Box>
+
     </Box>
 
       )
